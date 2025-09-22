@@ -584,3 +584,37 @@ Loops (Repeat 5 Times:).
 
 ---
 
+🔧 Phase 4: Functions + Conditionals + Styled Shell
+1. Expanded Language Features
+🔹 New Syntax
+Module:
+    Target: x86_64
+    Version: 1.0
+    Subject: Functions & Conditionals
+
+Func add(a, b):
+    Block:
+        Equation: result = a + b
+    End:
+        Return result
+
+Entry:
+    Func main():
+
+Block:
+    Equation: X = 10
+    Equation: Y = 5
+    Equation: Z = add(X, Y)
+
+    If X > Y:
+        Above:
+            Print "X is greater"
+    Else:
+        Below:
+            Print "Y is greater"
+
+End:
+    Return 0
+
+---
+
