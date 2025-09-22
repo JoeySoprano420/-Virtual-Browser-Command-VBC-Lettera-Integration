@@ -1,12 +1,17 @@
 import sys
 from lettera.compiler import compile_let
+import subprocess
 
 def run_file(path):
-    with open(path) as f:
-        source = f.read()
-    ir_code = compile_let(source)
-    print("\n[LLVM IR Generated]\n")
-    print(ir_code)
+    output = "a.exe" if sys.platform.startswith("win") else "a.out"
+    exe_path = compile_let(open(path).read(), output=output, build_exec=True)
+
+    print(f"\n[Executable Built] {exe_path}\n")
+
+    # Optionally run the binary
+    result = subprocess.run([f"./{exe_path}"], capture_output=True, text=True, shell=True)
+    print("[Program Output]:")
+    print(result.stdout)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
