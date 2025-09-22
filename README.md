@@ -1678,3 +1678,32 @@ UI Output:
 
 ---
 
+✅ Programs can now branch into alternate states, run in parallel, and merge when needed.
+
+2. Physics-Driven 3D Sandbox
+🔹 Concept
+
+Lettera UIs/components exist in a physics-enabled 3D world (WebGL + Cannon.js).
+
+Objects have mass, velocity, collision detection.
+
+.let code spawns/manipulates them.
+
+🔹 Syntax
+Physics Object Ball:
+    Shape: Sphere
+    Mass: 1
+    Position: {x=0,y=5,z=0}
+
+Physics Object Floor:
+    Shape: Plane
+    Mass: 0
+    Position: {x=0,y=0,z=0}
+
+While True:
+    If Ball.Position.y < 0:
+        Above:
+            Print "Ball hit the floor!"
+
+---
+
