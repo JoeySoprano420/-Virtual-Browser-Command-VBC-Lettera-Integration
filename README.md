@@ -522,3 +522,41 @@ Sum:
 
 ---
 
+🔧 Phase 3 (Refined): Optional SEE
+1. Build-Time Options
+
+When compiling:
+
+exe_path = compile_let(source, output="prog.out", build_exec=True, seal=True)
+
+
+seal=True → appends the SHA256 + LETSEAL tag to the binary.
+
+seal=False → produces a normal binary (no seal, runs faster).
+
+2. Runtime Verification
+
+You can run verification manually:
+
+from lettera.seal import verify_seal
+verify_seal("prog.out")
+
+
+Output:
+
+[VERIFIED] Seal intact.
+
+
+If tampered:
+
+[CORRUPT] Seal invalid!
+
+3. Example CLI Workflow
+# Compile with sealing
+python main.py examples/math.let
+
+# Run verification (optional)
+python -m lettera.seal verify examples/math.out
+
+---
+
