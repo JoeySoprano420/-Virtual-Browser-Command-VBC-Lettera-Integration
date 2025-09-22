@@ -320,9 +320,41 @@ vbc/
        └── system.let
 ```
 
+✅ With this setup, you can now run:
+
+(Bash)
+
+cd vbc
+python main.py examples/hello.let
+
+And it will:
+
+Lex & parse the .let file.
+
+Build an AST.
+
+Generate LLVM IR with llvmlite.
+
+Render it with styled output (rich).
+
+Ready to feed into llc → nasm → ld to emit .exe or .out.
+
 ---
 
+Pipeline:
 
+.let → Lexer → Parser → AST → LLVM IR → NASM asm → obj → exe/out
 
+---
 
+🔧 Phase 2: NASM Emission + Executable Build
+Dependencies
+
+llvmlite (for IR gen)
+
+subprocess (for shelling out to llc, nasm, ld or gcc)
+
+os, platform (for cross-platform output naming)
+
+Make sure you have LLVM (llc), NASM, and ld/gcc installed and in $PATH.
 
