@@ -358,3 +358,64 @@ os, platform (for cross-platform output naming)
 
 Make sure you have LLVM (llc), NASM, and ld/gcc installed and in $PATH.
 
+---
+
+🔄 Workflow
+
+Write a .let file (example: examples/hello.let).
+
+Run:
+
+python main.py examples/hello.let
+
+
+Pipeline:
+
+Lexer + Parser → AST
+
+LLVM IR generated
+
+llc lowers to .s (ASM)
+
+nasm/clang/gcc → .o → .exe / .out
+
+Binary runs, output styled in terminal.
+
+✅ Example Run
+
+hello.let:
+
+Module:
+    Target: x86_64
+    Version: 1.0
+    Subject: Greetings Program
+
+Entry:
+    Func main():
+
+Block:
+    Above:
+        Print "Hello from Lettera!"
+    Below:
+        Print "Goodbye, World."
+
+End:
+    Return 0
+
+
+Output:
+
+[LLVM IR Generated]
+; ModuleID = "lettera_module"
+define i32 @main() { ... }
+
+[CMD] llc -filetype=asm -o /tmp/.../prog.s /tmp/.../prog.ll
+[CMD] gcc /tmp/.../prog.s -o a.out
+[SUCCESS] Built executable: a.out
+
+[Program Output]:
+Hello from Lettera!
+Goodbye, World.
+
+---
+
