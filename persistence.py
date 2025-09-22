@@ -21,3 +21,25 @@ def set_var(name, value, persistent=False):
 
 def get_var(name, default=None):
     return global_state.get(name, default)
+
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+import time
+
+class ReloadHandler(FileSystemEventHandler):
+    def __init__(self, filepath, on_reload):
+        self.filepath = filepath
+        self.on_reload = on_reload
+
+    def on_modified(self, event):
+        if event.src_path.endswith(self.filepath):
+            print(f"[HOT-RELOAD] {self.filepath} changed, reloading...")
+            self.on_reload()
+
+def watch_file(filepath, on_reload):
+    event_handler = ReloadHandler(filepath, on_reload)
+    observer = Observer()
+    observer.schedule(event_handler, ".", recursive=False)
+    observer.start()
+    return observer
+
