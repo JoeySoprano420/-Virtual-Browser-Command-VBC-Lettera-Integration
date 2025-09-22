@@ -677,3 +677,31 @@ End:
     ---
 
     
+5. Execution Flow in Web Mode
+
+When .let is run with --mode web:
+
+Non-UI nodes → compile to LLVM as before.
+
+UI nodes → emitted into an HTML doc.
+
+Browser auto-opens a temporary file (temp.html).
+
+6. Example Run
+python -m shell.cli examples/ui.let --mode web
+
+
+Browser Output:
+
+A violet “Click Me” button.
+
+A form with Name and Age fields.
+
+An output div saying “Welcome to Lettera UI”.
+
+Clicking the button pops an alert: “Button clicked!”.
+
+Submitting the form shows “Form submitted”.
+
+---
+
