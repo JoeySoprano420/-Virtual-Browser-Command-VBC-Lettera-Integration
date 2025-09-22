@@ -1,4 +1,4 @@
-import subprocess, threading, queue
+import subprocess, threading, queue, threading, queue, asyncio
 
 class VBCProcess:
     def __init__(self, path):
@@ -21,3 +21,23 @@ class VBCProcess:
 def broadcast(processes, msg):
     for p in processes:
         p.send(msg)
+
+channels = {}
+
+def run_channel(name):
+    channels[name] = queue.Queue()
+
+def send(ch, val):
+    channels[ch].put(val)
+
+def receive(ch):
+    return channels[ch].get()
+
+def spawn(func, *args):
+    t = threading.Thread(target=func, args=args)
+    t.start()
+    return t
+
+async def async_task(coro):
+    return await coro
+
