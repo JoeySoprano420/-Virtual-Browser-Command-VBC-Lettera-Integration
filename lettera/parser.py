@@ -67,3 +67,42 @@ class Parser:
         self.eat("RETURN")
         val = self.eat("NUMBER")[1]
         return ASTNode("Return", value=int(val))
+
+def parse_block(self):
+    self.eat("BLOCK")
+    children = []
+    while self.peek()[0] not in ("END", None):
+        if self.peek()[0] == "EQUATION":
+            self.eat("EQUATION")
+            ident = self.eat("IDENT")[1]
+            self.eat("IDENT")  # '='
+            expr = self.parse_expression()
+            children.append(ASTNode("Equation", value=ident, children=[expr]))
+        elif self.peek()[0] == "ABOVE":
+            self.eat("ABOVE")
+            msg = self.eat("STRING")[1]
+            children.append(ASTNode("AbovePrint", value=msg))
+        elif self.peek()[0] == "BELOW":
+            self.eat("BELOW")
+            msg = self.eat("STRING")[1]
+            children.append(ASTNode("BelowPrint", value=msg))
+        else:
+            self.eat()
+    return ASTNode("Block", children=children)
+
+def parse_expression(self):
+    # Simple expression parser: supports X + Y and numbers
+    if self.peek()[0] == "NUMBER":
+        val = int(self.eat("NUMBER")[1])
+        return ASTNode("Number", value=val)
+    elif self.peek()[0] == "IDENT":
+        val = self.eat("IDENT")[1]
+        if self.peek()[1] == "+":
+            self.eat("IDENT")  # eat '+'
+            right = self.parse_expression()
+            return ASTNode("Add", value=val, children=[right])
+        else:
+            return ASTNode("Var", value=val)
+    else:
+        raise RuntimeError("Unexpected expression")
+
