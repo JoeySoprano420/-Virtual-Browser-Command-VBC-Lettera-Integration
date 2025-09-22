@@ -145,3 +145,25 @@ def generate_if(self, builder, node):
 
     builder.position_at_end(merge_block)
 
+def generate_repeat(self, builder, node):
+    count_var = builder.alloca(ir.IntType(32), name="repcount")
+    builder.store(ir.Constant(ir.IntType(32), 0), count_var)
+
+    loop_block = builder.function.append_basic_block("repeat.loop")
+    after_block = builder.function.append_basic_block("repeat.after")
+
+    builder.branch(loop_block)
+    builder.position_at_end(loop_block)
+
+    count = builder.load(count_var)
+    cond = builder.icmp_signed("<", count, ir.Constant(ir.IntType(32), node.value))
+    with builder.if_then(cond):
+        for child in node.children[0].children:
+            self.emit_statement(builder, child)
+        new_count = builder.add(count, ir.Constant(ir.IntType(32), 1))
+        builder.store(new_count, count_var)
+        builder.branch(loop_block)
+
+    builder.branch(after_block)
+    builder.position_at_end(after_block)
+
