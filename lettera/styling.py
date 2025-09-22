@@ -25,3 +25,25 @@ def styled_output(code: str, mode="letter", lang="llvm"):
             f.write(html)
         webbrowser.open(f"file://{path}")
 
+def render_ui(ast):
+    html_snippets = []
+    for node in ast.children:
+        if node.type == "UIElement":
+            html_snippets.append(generate_ui(node))
+    html_doc = f"""
+    <html>
+    <head>
+        <style>
+            body {{ font-family: Georgia, serif; margin: 20px; background: #f8f0e3; }}
+            button {{ background: violet; color: white; padding: 10px; margin: 5px; border: none; cursor: pointer; }}
+            form {{ margin-top: 15px; }}
+            div {{ margin: 10px; font-size: 18px; }}
+        </style>
+    </head>
+    <body>
+        {"".join(html_snippets)}
+    </body>
+    </html>
+    """
+    return html_doc
+
