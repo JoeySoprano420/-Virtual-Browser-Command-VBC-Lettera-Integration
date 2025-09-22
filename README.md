@@ -1650,3 +1650,31 @@ Fusion of state & space: persistent variables carry visible histories in 3D.
 
 ---
 
+🔧 Phase 14: Multiverse Branching + Physics Sandbox
+1. Multiverse Branching
+🔹 Concept
+
+Every persistent variable now has a branch tree, not just a timeline.
+
+You can fork a variable into alternate histories.
+
+You can merge branches deterministically or interactively.
+
+🔹 Syntax
+Persistent Equation: Counter = 0
+
+UI Button:
+    Label: "Fork Timeline"
+    Action:
+        Fork Counter
+
+UI Button:
+    Label: "Merge Timelines"
+    Action:
+        Merge Counter using "max"
+
+UI Output:
+    Show: "Counter across branches"
+
+---
+
