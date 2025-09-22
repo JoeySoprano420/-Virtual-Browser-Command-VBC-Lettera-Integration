@@ -208,4 +208,22 @@ def generate_ui(node):
         </script>
         """
 
-        
+def generate_component(node):
+    name = node.value
+    html_id = f"comp_{name.lower()}_{hash(name) & 0xffff}"
+
+    body_html = "".join(generate_ui(c) for c in node.children)
+    return f"""
+    <div id="{html_id}">
+        {body_html}
+    </div>
+    <script>
+        if(!vars['{name}']) vars['{name}'] = {{state: {{}}, setState: (k,v)=>{{ vars['{name}'].state[k]=v; render_{name}(); }}}};
+
+        function render_{name}() {{
+            document.getElementById("{html_id}").innerHTML = `{body_html}`;
+        }}
+        render_{name}();
+    </script>
+    """
+
