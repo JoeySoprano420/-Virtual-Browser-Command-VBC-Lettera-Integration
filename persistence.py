@@ -91,3 +91,50 @@ CREATE TABLE vars_history (
     value TEXT
 );
 
+def save_var_history(name, val):
+    conn = init_db()
+    c = conn.cursor()
+    c.execute("INSERT INTO vars_history (name,value) VALUES (?,?)",
+              (name, json.dumps(val)))
+    conn.commit()
+
+def undo_var(name):
+    conn = init_db()
+    c = conn.cursor()
+    c.execute("SELECT value FROM vars_history WHERE name=? ORDER BY timestamp DESC LIMIT 2", (name,))
+    rows = c.fetchall()
+    if len(rows) >= 2:
+        prev = json.loads(rows[1][0])
+        set_var_db(name, prev, type(prev).__name__)
+        return prev
+    return None
+
+def redo_var(name):
+    conn = init_db()
+    c = conn.cursor()
+    # Get the current value
+    current = get_var_db(name)
+    if current is None:
+        return None
+
+    # Fetch all historical values for the variable, ordered by timestamp
+    c.execute("SELECT value FROM vars_history WHERE name=? ORDER BY timestamp ASC", (name,))
+    rows = c.fetchall()
+    values = [json.loads(row[0]) for row in rows]
+
+    # Find the index of the current value in the history
+    try:
+        idx = values.index(current)
+    except ValueError:
+        return None  # Current value not found in history
+
+    # If there's a next value, apply it
+    if idx + 1 < len(values):
+        next_val = values[idx + 1]
+        set_var_db(name, next_val, type(next_val).__name__)
+        return next_val
+
+    return None  # No forward value available
+
+
+
