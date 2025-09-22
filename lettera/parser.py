@@ -326,3 +326,14 @@ def parse_component(self):
     block = self.parse_block()
     return ASTNode("Component", value=name, children=[block])
 
+def parse_equation(self):
+    persistent = False
+    if self.peek()[0] == "IDENT" and self.peek()[1] == "Persistent":
+        self.eat("IDENT")  # "Persistent"
+        persistent = True
+    self.eat("EQUATION")
+    name = self.eat("IDENT")[1]
+    self.eat("IDENT")  # '='
+    expr = self.parse_expression()
+    return ASTNode("Equation", value=name, children=[expr], attrs={"persistent": persistent})
+
