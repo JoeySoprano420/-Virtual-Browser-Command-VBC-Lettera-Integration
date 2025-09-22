@@ -163,3 +163,20 @@ def parse_ui(self):
 
     return ASTNode("UIElement", value=element, children=children)
 
+def generate_ui(node):
+    if node.value == "Button":
+        label = next((c.value.strip('"') for c in node.children if c.type == "UILabel"), "Button")
+        action = next((c.value.strip('"') for c in node.children if c.type == "UIAction"), "")
+        return f'<button onclick="alert(\'{action}\')">{label}</button>'
+    elif node.value == "Form":
+        fields = "".join([f'<label>{c.value}: <input name="{c.value}"/></label><br>' for c in node.children if c.type == "UIField"])
+        return f"""
+        <form onsubmit="alert('Form submitted'); return false;">
+            {fields}
+            <button type="submit">Submit</button>
+        </form>
+        """
+    elif node.value == "Output":
+        msg = next((c.value.strip('"') for c in node.children if c.type == "UIShow"), "")
+        return f'<div>{msg}</div>'
+
