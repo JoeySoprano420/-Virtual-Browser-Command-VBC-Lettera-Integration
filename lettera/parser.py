@@ -235,3 +235,9 @@ def generate_ui(node):
         </script>
         """
 
+def parse_onmessage(self):
+    self.eat("IDENT")  # "OnMessage"
+    msg_type = self.eat("STRING")[1]
+    block = self.parse_block()
+    return ASTNode("OnMessage", value=msg_type, children=[block])
+
