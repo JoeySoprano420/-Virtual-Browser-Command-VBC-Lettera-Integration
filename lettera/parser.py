@@ -106,3 +106,30 @@ def parse_expression(self):
     else:
         raise RuntimeError("Unexpected expression")
 
+def parse_func(self):
+    self.eat("FUNC")
+    name = self.eat("IDENT")[1]
+    self.eat("IDENT")  # '('
+    args = []
+    while self.peek()[0] != "IDENT" or self.peek()[1] != ")":
+        if self.peek()[0] == "IDENT":
+            args.append(self.eat("IDENT")[1])
+        else:
+            self.eat()
+    self.eat("IDENT")  # ')'
+    block = self.parse_block()
+    end = self.parse_end()
+    return ASTNode("Function", value=name, children=[ASTNode("Args", children=args), block, end])
+
+def parse_if(self):
+    self.eat("IDENT")  # "If"
+    left = self.eat("IDENT")[1]
+    op = self.eat("IDENT")[1]  # '>', '<', '=='
+    right = self.eat("IDENT")[1]
+    then_block = self.parse_block()
+    else_block = None
+    if self.peek()[1] == "Else:":
+        self.eat("IDENT")
+        else_block = self.parse_block()
+    return ASTNode("If", value=(left, op, right), children=[then_block, else_block])
+
