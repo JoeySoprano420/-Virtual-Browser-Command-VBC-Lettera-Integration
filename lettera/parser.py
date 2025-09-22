@@ -188,3 +188,50 @@ def parse_for(self):
     block = self.parse_block()
     return ASTNode("For", value=(var, start, end), children=[block])
 
+def parse_ui_list(self):
+    self.eat("IDENT")  # "UI"
+    self.eat("IDENT")  # "List:"
+    self.eat("IDENT")  # "For"
+    var = self.eat("IDENT")[1]
+    self.eat("IDENT")  # "in"
+    arr = self.eat("IDENT")[1]
+    block = self.parse_block()
+    return ASTNode("UIList", value=(var, arr), children=[block])
+
+def generate_ui(node):
+    if node.type == "UIList":
+        var, arr = node.value
+        # Render as <ul> populated via JS binding
+        return f"""
+        <ul id="list_{arr}"></ul>
+        <script>
+            if(Array.isArray(vars['{arr}'])) {{
+                const ul = document.getElementById("list_{arr}");
+                ul.innerHTML = "";
+                vars['{arr}'].forEach(val => {{
+                    let li = document.createElement("li");
+                    li.textContent = val;
+                    ul.appendChild(li);
+                }});
+            }}
+        </script>
+        """
+    elif node.type == "If":
+        cond_id = f"cond_{hash(str(node.value)) & 0xffff}"
+        then_html = "".join(generate_ui(c) for c in node.children[0].children)
+        else_html = "".join(generate_ui(c) for c in (node.children[1].children if node.children[1] else []))
+        left, op, right = node.value
+        return f"""
+        <div id="{cond_id}"></div>
+        <script>
+            function update_cond_{cond_id}() {{
+                if(vars['{left}'] {op} {right}) {{
+                    document.getElementById("{cond_id}").innerHTML = `{then_html}`;
+                }} else {{
+                    document.getElementById("{cond_id}").innerHTML = `{else_html}`;
+                }}
+            }}
+            update_cond_{cond_id}();
+        </script>
+        """
+
