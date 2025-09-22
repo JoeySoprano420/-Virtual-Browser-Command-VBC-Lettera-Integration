@@ -757,3 +757,76 @@ Block:
 
 ---
 
+(Similar logic for While and For, generating conditional branches and blocks.)
+
+3. Shell Integration
+
+Now .let programs can mix system execution + web interactivity:
+
+python -m shell.cli examples/ui_loops.let --mode web
+
+
+Loops execute normally in LLVM-backed binary.
+
+UI elements are rendered in browser with live variable binding.
+
+✅ Example: ui_loops.let
+Module:
+    Target: x86_64
+    Version: 1.0
+    Subject: Loops + UI
+
+Entry:
+    Func main():
+
+Block:
+    Equation: Count = 0
+
+    Repeat 3 Times:
+        Above:
+            Print "Looping"
+
+    UI Form:
+        Field: Name
+        Submit:
+            Print "Welcome, Name"
+
+    UI Output:
+        Show: "Hello, Name"
+
+End:
+    Return 0
+
+🖥️ Execution Flow
+
+Binary Output (LLVM side):
+
+Looping
+Looping
+Looping
+
+
+Web Output:
+
+Form for Name.
+
+Live output: “Hello, Guest”.
+
+Typing updates: “Hello, Violet”.
+
+Submitting shows: “Welcome, Violet”.
+
+✅ At this stage, Lettera has:
+
+Variables, arithmetic, functions, conditionals.
+
+Loops (Repeat, While, For).
+
+Sealed Envelope Execution (optional).
+
+Interactive Web Mode (forms, buttons, live variable binding).
+
+Multi-mode shell rendering (letter, cmd, web, css).
+
+---
+
