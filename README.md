@@ -1170,3 +1170,39 @@ Send worker@192.168.1.10:4000 with {"type":"task_update","data":{"Name":"Compile
 
 ---
 
+2. Full Component Framework
+🔹 Concept
+
+Each UI element is a component with:
+
+Props: immutable inputs.
+
+State: internal reactive variables.
+
+Render: function that returns HTML.
+
+OnEvent: event handlers.
+
+Components are reusable and can be declared inline or imported.
+
+🔹 Syntax
+Component Counter:
+    State: count = 0
+    UI Output:
+        Show: "Count is count"
+    UI Button:
+        Label: "Increment"
+        Action:
+            Equation: count = count + 1
+
+Entry:
+    Func main():
+Block:
+    Use Counter
+    Use Counter
+
+
+➡ Each Counter renders independently with its own state.
+
+---
+
