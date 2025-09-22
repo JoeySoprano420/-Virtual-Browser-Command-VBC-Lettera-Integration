@@ -1302,3 +1302,22 @@ Block:
 
 ---
 
+✅ Persistent variables survive program restarts.
+
+2. Hot-Reload Live Editing
+🔹 Concept
+
+VBC watches .let source files.
+
+On file change:
+
+Re-lex + re-parse.
+
+Diff AST.
+
+Apply changes live (update UI, swap functions).
+
+No restart → running UIs mutate in place.
+
+---
+
