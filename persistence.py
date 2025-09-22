@@ -85,3 +85,9 @@ def get_var_db(name):
     if row: return json.loads(row[1])
     return None
 
+CREATE TABLE vars_history (
+    name TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    value TEXT
+);
+
