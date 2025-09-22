@@ -1,0 +1,17 @@
+Module:
+    Target: x86_64
+    Version: 1.0
+    Subject: Greetings Program
+
+Entry:
+    Func main():
+
+Block:
+    Equation: Greeting = hello world
+    Above:
+        Print "greeting"
+    Below:
+        Print "Hello, World"
+
+End:
+    Return 0
