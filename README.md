@@ -1583,3 +1583,30 @@ UI Button:
 
 ---
 
+✅ Undo/redo works per variable. Future versions: branching timelines (like Git for state).
+
+2. 3D Spatial Collaborative Workspace
+🔹 Concept
+
+.let editors & UIs appear inside a shared 3D world (WebGL/Three.js).
+
+Users see each other’s cursors as avatars.
+
+Code blocks = floating scrolls.
+
+UI components = floating panels.
+
+Live sync via WebSockets.
+
+🔹 Example Usage
+python -m shell.cli counter.let --mode vr
+
+
+Opens a 3D scene in browser.
+
+Counter component = floating cube that increments when clicked.
+
+Multiple users editing = see each other’s cursors + live code diff floating in space.
+
+---
+
