@@ -715,3 +715,24 @@ Styling Modes (letter, cmd, web, css).
 
 ---
 
+🔧 Phase 6: Reactive UIs + Looping Constructs
+1. Reactive Variable Binding
+🔹 New Syntax
+Block:
+    Equation: Name = "Guest"
+
+    UI Form:
+        Field: Name
+        Submit:
+            Print "Welcome, Name"
+
+    UI Output:
+        Show: "Hello, Name"
+
+
+Field: Name binds an <input> directly to variable Name.
+
+UI Output: Show "Hello, Name" automatically updates when Name changes.
+
+---
+
