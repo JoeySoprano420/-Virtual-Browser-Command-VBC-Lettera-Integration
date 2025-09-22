@@ -1277,3 +1277,28 @@ Fusion: distributed messages directly mutate UI component state → live dashboa
 
 ---
 
+🔧 Phase 11: Persistence + Hot-Reload
+1. Persistent Storage
+🔹 Concept
+
+Any Equation can be declared persistent.
+
+Stored in JSON files (.vbc/state.json) keyed by program + variable name.
+
+Automatically reloaded when the program starts.
+
+🔹 Syntax
+Block:
+    Persistent Equation: Counter = 0
+
+    UI Output:
+        Show: "Counter is Counter"
+
+    UI Button:
+        Label: "Increment"
+        Action:
+            Equation: Counter = Counter + 1
+            Save Counter
+
+---
+
