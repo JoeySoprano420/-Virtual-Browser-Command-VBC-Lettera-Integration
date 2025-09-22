@@ -853,3 +853,91 @@ Block:
             ---
 
             
+🔹 Example Workflow
+
+prog1.let:
+
+Entry:
+    Func main():
+Block:
+    Above:
+        Print "Received a message!"
+End:
+    Return 0
+
+
+prog2.let:
+
+Entry:
+    Func main():
+Block:
+    Above:
+        Print "Replying to message."
+End:
+    Return 0
+
+
+VBC Shell:
+
+send prog1.let with input("Hello")
+reply prog2.let with result
+broadcast all with "sync"
+
+
+Output:
+
+[prog1.let reply]: Received a message!
+[prog2.let reply]: Replying to message.
+[all]: sync
+
+3. Styling Integration
+
+Letter Script Mode → Messages styled like envelopes:
+
+[Letter Sent → prog1.let]
+┌─────────────────────────┐
+│ Dear prog1,             │
+│   Hello                 │
+└─────────────────────────┘
+
+
+Web Mode → Multi-pane view, each Lettera program is a “thread window”.
+
+CMD Mode → Classic command piping.
+
+CSS Mode → Custom layouts for correspondence threads.
+
+✅ With this Phase, Lettera & VBC now support:
+
+Dynamic reactive UI (lists, conditionals, variable-bound views).
+
+Multi-process orchestration (send, reply, broadcast).
+
+Styled execution modes across CLI, browser, and letter views.
+
+---
+
+🔧 Phase 8: Orchestration–UI Fusion + Type System
+1. Cross-Process UI Binding
+🔹 Concept
+
+Each VBC process maintains a variable map (vars).
+
+When a process broadcasts/receives, its vars can be updated, and UI elements re-render live.
+
+Example: A dashboard .let listens to workers, and updates a live list of job statuses.
+
+🔹 Syntax
+Block:
+    Equation: Tasks = ["Pending"]
+
+    UI List:
+        For task in Tasks:
+            Show: "task"
+
+    OnMessage "task_update":
+        Append Tasks with "New Task"
+
+
+---
+
