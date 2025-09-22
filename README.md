@@ -941,3 +941,31 @@ Block:
 
 ---
 
+2. Extended Type System
+
+We evolve Lettera from bare integers/strings → full types:
+
+🔹 Types
+
+int: integers (32-bit default, can extend).
+
+string: "quoted text".
+
+array[T]: lists of items (["A","B","C"]).
+
+struct: record of fields (Person = {Name="Violet", Age=25}).
+
+🔹 Syntax Example
+Block:
+    Equation: Count = 42
+    Equation: Greeting = "Hello"
+    Equation: Tasks = ["Wash", "Cook", "Write"]
+    Equation: User = {Name="Shay", Age=19}
+
+    Above:
+        Print "Greeting"
+    Below:
+        Print "User.Name"
+
+---
+
