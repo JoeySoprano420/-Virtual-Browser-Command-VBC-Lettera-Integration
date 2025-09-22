@@ -419,3 +419,35 @@ Goodbye, World.
 
 ---
 
+🔧 Phase 3: Feature Expansion + Sealed Envelope Execution
+1. Expanded Lettera Features
+🔹 New Syntax
+Module:
+    Target: x86_64
+    Version: 1.0
+    Subject: Arithmetic Demo
+
+Entry:
+    Func main():
+
+Block:
+    Equation: X = 5
+    Equation: Y = 7
+    Equation: Z = X + Y
+    Above:
+        Print "Result is:"
+    Below:
+        Print "Z"
+
+End:
+    Return 0
+
+
+Equation: now supports literals and arithmetic.
+
+Identifiers: can be used later (symbol table).
+
+Function Calls: support defining/using user functions (Func add():).
+
+---
+
