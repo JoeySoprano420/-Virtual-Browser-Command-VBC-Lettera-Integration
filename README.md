@@ -969,3 +969,40 @@ Block:
 
 ---
 
+3. Cross-Process Structured Messaging
+
+Now processes can send arrays, strings, structs, not just raw text.
+
+Example Shell
+send worker.let with {"type":"task_update", "data":{"Name":"Build","Status":"Pending"}}
+
+Worker .let
+OnMessage "task_update":
+    Append Tasks with "data.Name"
+    If data.Status == "Pending":
+        UI Output:
+            Show: "Task waiting..."
+
+4. Demo Flow
+
+Process 1 (worker) has a live UI list of tasks.
+
+Process 2 (coordinator) broadcasts structured messages.
+
+Worker’s OnMessage handlers react, updating UI in real time.
+
+Browser UI → updates instantly when messages arrive.
+
+✅ With this Phase:
+
+UI ↔ Orchestration Fusion: messages update UIs live.
+
+Extended Types: arrays, strings, structs.
+
+Structured Messaging: JSON-like messages between Lettera programs.
+
+Styled Modes: still intact (letter, cmd, web, css).
+
+---
+
+
