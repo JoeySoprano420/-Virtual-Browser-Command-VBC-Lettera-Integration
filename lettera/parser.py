@@ -133,3 +133,33 @@ def parse_if(self):
         else_block = self.parse_block()
     return ASTNode("If", value=(left, op, right), children=[then_block, else_block])
 
+def parse_ui(self):
+    kind = self.eat("IDENT")[1]  # "UI"
+    element = self.eat("IDENT")[1]  # Button/Form/Output
+    children = []
+
+    while self.peek()[0] not in ("END", "BLOCK", None):
+        if self.peek()[0] == "IDENT" and self.peek()[1] == "Label:":
+            self.eat("IDENT")
+            val = self.eat("STRING")[1]
+            children.append(ASTNode("UILabel", value=val))
+        elif self.peek()[0] == "IDENT" and self.peek()[1] == "Action:":
+            self.eat("IDENT")
+            val = self.eat("STRING")[1]
+            children.append(ASTNode("UIAction", value=val))
+        elif self.peek()[0] == "IDENT" and self.peek()[1] == "Field:":
+            self.eat("IDENT")
+            val = self.eat("IDENT")[1]
+            children.append(ASTNode("UIField", value=val))
+        elif self.peek()[0] == "IDENT" and self.peek()[1] == "Show:":
+            self.eat("IDENT")
+            val = self.eat("STRING")[1]
+            children.append(ASTNode("UIShow", value=val))
+        elif self.peek()[0] == "IDENT" and self.peek()[1] == "Submit:":
+            self.eat("IDENT")
+            children.append(ASTNode("UISubmit"))
+        else:
+            break
+
+    return ASTNode("UIElement", value=element, children=children)
+
