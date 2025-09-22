@@ -47,3 +47,19 @@ def render_ui(ast):
     """
     return html_doc
 
+def generate_ui(node):
+    if node.value == "Form":
+        fields = "".join([
+            f'<label>{c.value}: <input id="{c.value}" oninput="updateVar(\'{c.value}\', this.value)"/></label><br>'
+            for c in node.children if c.type == "UIField"
+        ])
+        return f"""
+        <form onsubmit="event.preventDefault(); runSubmit();">
+            {fields}
+            <button type="submit">Submit</button>
+        </form>
+        """
+    elif node.value == "Output":
+        msg = next((c.value.strip('"') for c in node.children if c.type == "UIShow"), "")
+        return f'<div id="output">{msg}</div>'
+
