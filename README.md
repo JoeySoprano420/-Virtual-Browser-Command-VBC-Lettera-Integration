@@ -1006,3 +1006,43 @@ Styled Modes: still intact (letter, cmd, web, css).
 ---
 
 
+🔧 Phase 9: Concurrency + Dynamic UIs
+1. Concurrency Primitives
+
+We introduce Spawn, Async, Await, and Channel into Lettera.
+
+🔹 Syntax
+Block:
+    Channel jobs
+
+    Spawn worker():
+        Block:
+            While True:
+                Equation: job = Receive jobs
+                Above:
+                    Print "Working on job"
+
+    Async main_task():
+        Block:
+            Equation: i = 0
+            While i < 3:
+                Send jobs with "Job i"
+                Equation: i = i + 1
+
+    Await main_task
+
+
+Channel name → defines a message queue.
+
+Spawn func() → creates a lightweight thread running func.
+
+Send ch with data → enqueue data to channel.
+
+Receive ch → blocks until data available.
+
+Async → defines async function.
+
+Await → wait for async function to complete.
+
+---
+
