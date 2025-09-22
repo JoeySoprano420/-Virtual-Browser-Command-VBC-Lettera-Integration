@@ -341,3 +341,27 @@ def parse_receive(self):
     ch = self.eat("IDENT")[1]
     return ASTNode("Receive", value=ch)
 
+def parse_ui_dropdown(self):
+    self.eat("IDENT")  # UI
+    self.eat("IDENT")  # Dropdown:
+    options = self.eat("IDENT")[1]  # Options var
+    self.eat("IDENT")  # Bind:
+    bind = self.eat("IDENT")[1]
+    return ASTNode("UIDropdown", value=(options, bind))
+
+def parse_ui_table(self):
+    self.eat("IDENT")  # UI
+    self.eat("IDENT")  # Table:
+    cols = self.parse_array()
+    self.eat("IDENT")  # Data:
+    data = self.eat("IDENT")[1]
+    return ASTNode("UITable", value=(cols, data))
+
+def parse_ui_chart(self):
+    self.eat("IDENT")  # UI
+    self.eat("IDENT")  # Chart:
+    typ = self.eat("IDENT")[1]
+    self.eat("IDENT")  # Data:
+    data = self.eat("IDENT")[1]
+    return ASTNode("UIChart", value=(typ, data))
+
