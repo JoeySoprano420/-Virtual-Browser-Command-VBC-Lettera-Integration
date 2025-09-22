@@ -451,3 +451,15 @@ Function Calls: support defining/using user functions (Func add():).
 
 ---
 
+4. Sealed Envelope Execution (SEE)
+
+We’ll inject a custom .lettera_seal section containing:
+
+SHA256 hash of the binary
+
+Magic marker "LETSEAL"
+
+Then at runtime, a small prologue checks if the binary’s hash matches. If not → abort.
+
+---
+
