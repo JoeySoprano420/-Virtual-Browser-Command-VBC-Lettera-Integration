@@ -632,3 +632,15 @@ CSS Mode → apply custom CSS themes (switchable at runtime).
 
 ---
 
+✅ Example Usage
+# Compile with Letter Script styling
+python -m shell.cli examples/functions.let --mode letter
+
+# Classic CLI mode
+python -m shell.cli examples/functions.let --mode cmd
+
+# Render output in browser
+python -m shell.cli examples/functions.let --mode web
+
+---
+
