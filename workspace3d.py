@@ -30,3 +30,34 @@ animate();
 </head>
 <body></body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cannon/build/cannon.min.js"></script>
+<script>
+let world = new CANNON.World();
+world.gravity.set(0,-9.82,0);
+
+// Floor
+let groundBody = new CANNON.Body({ mass:0 });
+let groundShape = new CANNON.Plane();
+groundBody.addShape(groundShape);
+world.addBody(groundBody);
+
+// Ball
+let ballBody = new CANNON.Body({ mass:1 });
+let ballShape = new CANNON.Sphere(1);
+ballBody.addShape(ballShape);
+ballBody.position.set(0,5,0);
+world.addBody(ballBody);
+
+// Render loop
+function animate(){
+  world.step(1/60);
+  if(ballBody.position.y < 0){
+    console.log("Ball hit the floor!");
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
