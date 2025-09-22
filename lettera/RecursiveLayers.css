@@ -1,0 +1,9 @@
+VBC Shell
+ ├── VBC Lexer/Parser/AST/IRGen (core)
+ ├── Lettera Runtime (foreign module)
+ │     ├── Lettera Lexer (.let)
+ │     ├── Lettera Parser (.let)
+ │     ├── Lettera AST (.let)
+ │     ├── Lettera IRGen (.let)
+ │     └── Lettera Optimizer (.let)
+ └── User Programs
