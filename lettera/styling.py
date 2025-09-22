@@ -122,3 +122,52 @@ elif self.peek()[0] == "IDENT" and self.peek()[1] == "Show:":
     val = self.eat("STRING")[1]
     children.append(ASTNode("UIShow", value=val))
 
+def generate_ui(node):
+    if node.type == "UIDropdown":
+        options, bind = node.value
+        return f"""
+        <select id="{bind}" onchange="vars['{bind}']=this.value;">
+            <script>
+                (vars['{options}']||[]).forEach(opt=>{
+                    let o=document.createElement('option');
+                    o.value=opt; o.text=opt;
+                    document.getElementById('{bind}').appendChild(o);
+                });
+            </script>
+        </select>
+        """
+    elif node.type == "UITable":
+        cols, data = node.value
+        cols = [c.value for c in cols.children]
+        return f"""
+        <table border="1">
+            <tr>{"".join(f"<th>{c}</th>" for c in cols)}</tr>
+            <script>
+                Object.keys(vars['{data}']||{{}}).forEach(k=>{
+                    let tr=document.createElement('tr');
+                    tr.innerHTML = `<td>${{k}}</td><td>${{vars['{data}'][k]}}</td>`;
+                    document.currentScript.parentNode.appendChild(tr);
+                });
+            </script>
+        </table>
+        """
+    elif node.type == "UIChart":
+        typ, data = node.value
+        return f"""
+        <canvas id="chart_{data}" width="400" height="200"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            new Chart(document.getElementById("chart_{data}"), {{
+                type: '{typ.lower()}',
+                data: {{
+                    labels: Object.keys(vars['{data}']),
+                    datasets: [{{
+                        label: '{data}',
+                        data: Object.values(vars['{data}']),
+                        backgroundColor: ['violet','gold','silver']
+                    }}]
+                }}
+            }});
+        </script>
+        """
+
