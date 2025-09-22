@@ -463,3 +463,62 @@ Then at runtime, a small prologue checks if the binary’s hash matches. If not 
 
 ---
 
+✅ Workflow
+
+Write .let file with arithmetic/variables.
+
+Run:
+
+python main.py examples/math.let
+
+
+Pipeline:
+
+IR generated (with variable storage + arithmetic).
+
+Executable built (.out / .exe).
+
+Binary sealed with SHA256 signature.
+
+At startup, SEE check validates binary integrity.
+
+Program runs only if seal is intact.
+
+🔮 Example: math.let
+Module:
+    Target: x86_64
+    Version: 1.0
+    Subject: Math Program
+
+Entry:
+    Func main():
+
+Block:
+    Equation: X = 12
+    Equation: Y = 8
+    Equation: Z = X + Y
+    Above:
+        Print "Sum:"
+    Below:
+        Print "Z"
+
+End:
+    Return 0
+
+
+Output (styled + runtime):
+
+[LLVM IR Generated]
+; ModuleID = "lettera_module"
+define i32 @main() { ... }
+
+[SUCCESS] Built executable: a.out
+[SEALED] Binary sealed with SHA256
+[VERIFIED] Seal intact.
+
+[Program Output]:
+Sum:
+20
+
+---
+
