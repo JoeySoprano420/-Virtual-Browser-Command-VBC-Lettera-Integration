@@ -43,3 +43,18 @@ def watch_file(filepath, on_reload):
     observer.start()
     return observer
 
+def run_with_hot_reload(path, mode="web"):
+    def reload():
+        source = open(path).read()
+        exe_path = compile_let(source, output="prog.out", build_exec=False)
+        if mode == "web":
+            html = render_ui(ast)  # re-render UI
+            with open("hotreload.html","w") as f: f.write(html)
+            webbrowser.open("hotreload.html")
+    reload()
+    obs = watch_file(path, reload)
+    try:
+        while True: time.sleep(1)
+    except KeyboardInterrupt:
+        obs.stop()
+
