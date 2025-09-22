@@ -204,14 +204,6 @@ def parse_onmessage(self):
     block = self.parse_block()
     return ASTNode("OnMessage", value=msg_type, children=[block])
 
-class VBCProcess:
-    def __init__(self, path):
-        self.path = path
-        self.vars = {}
-        self.q = queue.Queue()
-        self.thread = threading.Thread(target=self.run)
-        self.thread.start()
-
     def run(self):
         while True:
             msg = self.q.get()
