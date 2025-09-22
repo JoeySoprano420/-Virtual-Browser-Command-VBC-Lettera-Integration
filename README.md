@@ -1046,3 +1046,53 @@ Await → wait for async function to complete.
 
 ---
 
+✅ This means .let code can spawn background workers and communicate via channels.
+
+2. Dynamic UI Components
+
+We extend Web Mode to support tables, dropdowns, and charts that bind directly to Lettera variables.
+
+🔹 New Syntax
+Block:
+    Equation: Fruits = ["Apple", "Banana", "Cherry"]
+    Equation: Sales = {Apple=10, Banana=7, Cherry=15}
+
+    UI Dropdown:
+        Options: Fruits
+        Bind: SelectedFruit
+
+    UI Table:
+        Columns: ["Fruit","Sales"]
+        Data: Sales
+
+    UI Chart:
+        Type: Bar
+        Data: Sales
+
+---
+
+✅ This means .let code can spawn background workers and communicate via channels.
+
+2. Dynamic UI Components
+
+We extend Web Mode to support tables, dropdowns, and charts that bind directly to Lettera variables.
+
+🔹 New Syntax
+Block:
+    Equation: Fruits = ["Apple", "Banana", "Cherry"]
+    Equation: Sales = {Apple=10, Banana=7, Cherry=15}
+
+    UI Dropdown:
+        Options: Fruits
+        Bind: SelectedFruit
+
+    UI Table:
+        Columns: ["Fruit","Sales"]
+        Data: Sales
+
+    UI Chart:
+        Type: Bar
+        Data: Sales
+
+---
+
