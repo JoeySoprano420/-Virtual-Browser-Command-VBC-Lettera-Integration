@@ -1610,3 +1610,43 @@ Multiple users editing = see each other’s cursors + live code diff floating in
 
 ---
 
+➡ Each user’s edits update the scroll text. UIs appear as 3D panels.
+
+🔹 Collaboration Features
+
+WebSocket server syncs edits:
+
+"cursor": {x,y,z} → move avatar.
+
+"code": "line updated" → scroll text updates.
+
+"ui_state": {...} → components re-render in 3D.
+
+Users can walk around the workspace and grab/drag components.
+
+✅ Think Minecraft + Google Docs + React, but in Lettera.
+
+3. Fusion: Time-Travel + 3D Workspace
+
+Each component in 3D space carries its timeline of states.
+
+You can rewind a component’s history (watch UI roll back in time).
+
+Teams can branch history → e.g. one branch explores one path, another explores alternatives.
+
+The 3D world itself becomes a time-travel canvas.
+
+✅ With this Phase, Lettera + VBC now has:
+
+DB-backed time-travel persistence with undo/redo and branching timelines.
+
+3D spatial collaborative workspace for .let code + UIs.
+
+Avatars & cursors representing live users.
+
+Floating scrolls and panels for code and UIs.
+
+Fusion of state & space: persistent variables carry visible histories in 3D.
+
+---
+
