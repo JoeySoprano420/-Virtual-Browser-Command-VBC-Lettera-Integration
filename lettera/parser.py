@@ -320,3 +320,9 @@ def parse_ui_chart(self):
     data = self.eat("IDENT")[1]
     return ASTNode("UIChart", value=(typ, data))
 
+def parse_component(self):
+    self.eat("IDENT")  # Component
+    name = self.eat("IDENT")[1]
+    block = self.parse_block()
+    return ASTNode("Component", value=name, children=[block])
+
