@@ -94,3 +94,54 @@ class IRGenerator:
         builder.ret(ir.Constant(ir.IntType(32), 0))
         return str(self.module)
 
+def generate_function(self, node):
+    name = node.value
+    args = [ir.IntType(32) for _ in node.children[0].children]
+    fnty = ir.FunctionType(ir.IntType(32), args)
+    func = ir.Function(self.module, fnty, name=name)
+
+    block = func.append_basic_block(name="entry")
+    builder = ir.IRBuilder(block)
+
+    # map args
+    for idx, arg in enumerate(func.args):
+        var = builder.alloca(ir.IntType(32), name=node.children[0].children[idx])
+        builder.store(arg, var)
+        self.symbols[node.children[0].children[idx]] = var
+
+    # compile body
+    for child in node.children[1].children:
+        if child.type == "Equation":
+            name = child.value
+            val = self.eval_expr(builder, child.children[0])
+            var = builder.alloca(ir.IntType(32), name=name)
+            builder.store(val, var)
+            self.symbols[name] = var
+    ret_val = self.eval_expr(builder, node.children[2])
+    builder.ret(ret_val)
+
+def generate_if(self, builder, node):
+    left, op, right = node.value
+    lval = builder.load(self.symbols[left])
+    rval = builder.load(self.symbols[right])
+    cond = builder.icmp_signed(op, lval, rval)
+
+    then_block = builder.function.append_basic_block("then")
+    else_block = builder.function.append_basic_block("else")
+    merge_block = builder.function.append_basic_block("ifcont")
+
+    builder.cbranch(cond, then_block, else_block)
+
+    builder.position_at_end(then_block)
+    for child in node.children[0].children:
+        self.emit_statement(builder, child)
+    builder.branch(merge_block)
+
+    builder.position_at_end(else_block)
+    if node.children[1]:
+        for child in node.children[1].children:
+            self.emit_statement(builder, child)
+    builder.branch(merge_block)
+
+    builder.position_at_end(merge_block)
+
