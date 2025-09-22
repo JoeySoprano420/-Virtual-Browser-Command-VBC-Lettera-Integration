@@ -136,5 +136,13 @@ def redo_var(name):
 
     return None  # No forward value available
 
+CREATE TABLE vars_branches (
+    name TEXT,
+    branch_id TEXT,
+    parent_id TEXT,
+    value TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 
 
