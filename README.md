@@ -1404,3 +1404,18 @@ User	struct	{"Name":"Violet","Age":27}
 
 ---
 
+✅ Persistent variables now live in a DB. Multiple Lettera apps can read/write the same state concurrently.
+
+2. Collaborative Hot-Reload
+🔹 Concept
+
+.let file edits are broadcast over WebSockets.
+
+Multiple users can co-edit and see UIs sync live.
+
+Conflict-free replicated data type (CRDT) ensures edits don’t overwrite each other.
+
+Think Google Docs for Lettera source code.
+
+---
+
