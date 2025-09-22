@@ -49,3 +49,26 @@ class VBCProcess:
         self.thread = threading.Thread(target=self.run)
         self.thread.start()
 
+import socket, threading, json
+
+def start_listener(port, handler):
+    def server():
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(("", port))
+        s.listen()
+        print(f"[VBC] Listening on {port}")
+        while True:
+            conn, addr = s.accept()
+            data = conn.recv(4096)
+            if not data: break
+            msg = json.loads(data.decode())
+            handler(msg, addr)
+            conn.close()
+    threading.Thread(target=server, daemon=True).start()
+
+def send_message(host, port, msg):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((host, port))
+    s.send(json.dumps(msg).encode())
+    s.close()
+
