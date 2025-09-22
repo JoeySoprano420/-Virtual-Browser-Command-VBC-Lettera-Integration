@@ -618,3 +618,17 @@ End:
 
 ---
 
+4. Shell + Styling Integration
+
+The VBC shell supports multiple styled execution modes for .let files:
+
+Letter Script Mode → parchment/paper styling (monospace serif, wide margins).
+
+Web Mode → render .let output as HTML in a side-browser pane.
+
+CMD Mode → classic black/green CLI look.
+
+CSS Mode → apply custom CSS themes (switchable at runtime).
+
+---
+
