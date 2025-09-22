@@ -1206,3 +1206,74 @@ Block:
 
 ---
 
+🔹 Lifecycle Hooks
+
+We can add:
+
+OnInit → runs when component mounts.
+
+OnUpdate → runs whenever state changes.
+
+OnDestroy → runs when component removed.
+
+3. Fusion: Distributed Components
+
+Because components are just reactive data-bound containers, distributed orchestration can update component state.
+
+Example: Remote Task Dashboard
+Listen on 5000
+
+Component TaskBoard:
+    State: Tasks = []
+    UI Table:
+        Columns: ["Task","Status"]
+        Data: Tasks
+
+OnMessage "task_update":
+    Append TaskBoard.Tasks with {Name="Build", Status="Pending"}
+
+
+Another machine:
+
+Send dashboard@192.168.1.50:5000 with {"type":"task_update","data":{"Name":"Build","Status":"Pending"}}
+
+
+➡ The TaskBoard component on the dashboard auto-updates with a new row.
+
+4. Demo: Distributed Chat App
+
+server.let
+
+Listen on 4001
+
+Component Chat:
+    State: Messages = []
+    UI List:
+        For msg in Messages:
+            Show: "msg"
+
+OnMessage "chat":
+    Append Chat.Messages with data.Text
+
+
+client.let
+
+Send server@192.168.1.50:4001 with {"type":"chat","data":{"Text":"Hello from client!"}}
+
+
+➡ Browser on server auto-updates the chat log in real time.
+
+✅ With this Phase, Lettera + VBC now has:
+
+Distributed orchestration across machines (via TCP sockets).
+
+Structured message passing (arrays, structs, strings).
+
+UI as Components with Props, State, OnEvent, lifecycle hooks.
+
+Reusable components (counters, tables, charts, dashboards).
+
+Fusion: distributed messages directly mutate UI component state → live dashboards, remote UIs, collaborative apps.
+
+---
+
