@@ -189,3 +189,28 @@ elif self.peek()[0] == "IDENT" and self.peek()[1] == "Show:":
     val = self.eat("STRING")[1]
     children.append(ASTNode("UIShow", value=val))
 
+def parse_repeat(self):
+    self.eat("IDENT")  # Repeat
+    times = int(self.eat("NUMBER")[1])
+    self.eat("IDENT")  # "Times:"
+    block = self.parse_block()
+    return ASTNode("Repeat", value=times, children=[block])
+
+def parse_while(self):
+    self.eat("IDENT")  # While
+    left = self.eat("IDENT")[1]
+    op = self.eat("IDENT")[1]
+    right = self.eat("NUMBER")[1]
+    block = self.parse_block()
+    return ASTNode("While", value=(left, op, int(right)), children=[block])
+
+def parse_for(self):
+    self.eat("IDENT")  # For
+    var = self.eat("IDENT")[1]
+    self.eat("IDENT")  # '='
+    start = int(self.eat("NUMBER")[1])
+    self.eat("IDENT")  # 'to'
+    end = int(self.eat("NUMBER")[1])
+    block = self.parse_block()
+    return ASTNode("For", value=(var, start, end), children=[block])
+
