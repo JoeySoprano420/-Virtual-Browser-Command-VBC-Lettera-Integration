@@ -41,3 +41,11 @@ def spawn(func, *args):
 async def async_task(coro):
     return await coro
 
+class VBCProcess:
+    def __init__(self, path):
+        self.path = path
+        self.vars = {}
+        self.q = queue.Queue()
+        self.thread = threading.Thread(target=self.run)
+        self.thread.start()
+
