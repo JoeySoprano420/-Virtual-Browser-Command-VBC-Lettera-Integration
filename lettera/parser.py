@@ -241,3 +241,33 @@ def parse_onmessage(self):
     block = self.parse_block()
     return ASTNode("OnMessage", value=msg_type, children=[block])
 
+class VBCProcess:
+    def __init__(self, path):
+        self.path = path
+        self.vars = {}
+        self.q = queue.Queue()
+        self.thread = threading.Thread(target=self.run)
+        self.thread.start()
+
+    def run(self):
+        while True:
+            msg = self.q.get()
+            if msg == "STOP": break
+            self.handle_message(msg)
+
+    def handle_message(self, msg):
+        # parse structured msg
+        typ, payload = msg.get("type"), msg.get("data")
+        if typ in self.vars.get("listeners", {}):
+            # update bound variable
+            self.vars["Tasks"].append(payload)
+            self.update_ui()
+        print(f"[{self.path}] handled message {typ} → {payload}")
+
+    def send(self, msg):
+        self.q.put(msg)
+
+    def update_ui(self):
+        # emit JS refresh in Web Mode
+        pass
+
