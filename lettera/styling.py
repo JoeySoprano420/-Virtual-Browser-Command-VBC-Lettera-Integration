@@ -63,3 +63,36 @@ def generate_ui(node):
         msg = next((c.value.strip('"') for c in node.children if c.type == "UIShow"), "")
         return f'<div id="output">{msg}</div>'
 
+def render_ui(ast):
+    html_snippets = []
+    for node in ast.children:
+        if node.type == "UIElement":
+            html_snippets.append(generate_ui(node))
+    html_doc = f"""
+    <html>
+    <head>
+        <style>
+            body {{ font-family: Georgia, serif; margin: 20px; background: #f8f0e3; }}
+            button {{ background: violet; color: white; padding: 10px; margin: 5px; border: none; cursor: pointer; }}
+            div {{ margin: 10px; font-size: 18px; }}
+        </style>
+        <script>
+            let vars = {{}};
+            function updateVar(name, value) {{
+                vars[name] = value;
+                if(document.getElementById("output")) {{
+                    document.getElementById("output").innerText = "Hello, " + (vars["Name"] || "Guest");
+                }}
+            }}
+            function runSubmit() {{
+                alert("Welcome, " + (vars["Name"] || "Guest"));
+            }}
+        </script>
+    </head>
+    <body>
+        {"".join(html_snippets)}
+    </body>
+    </html>
+    """
+    return html_doc
+
