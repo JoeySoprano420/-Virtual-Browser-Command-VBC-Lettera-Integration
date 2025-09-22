@@ -736,3 +736,24 @@ UI Output: Show "Hello, Name" automatically updates when Name changes.
 
 ---
 
+2. Looping Constructs
+🔹 New Syntax
+Block:
+    Equation: Count = 0
+
+    Repeat 3 Times:
+        Above:
+            Print "Repeating"
+
+    While Count < 5:
+        Below:
+            Print "Count is"
+        Equation: Count = Count + 1
+
+    For i = 1 to 3:
+        Above:
+            Print "Iteration"
+
+
+---
+
