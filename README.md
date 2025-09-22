@@ -644,3 +644,36 @@ python -m shell.cli examples/functions.let --mode web
 
 ---
 
+🔧 Phase 5: Interactive Web Mode for Lettera
+1. New UI Syntax in .let
+
+We’ll extend Lettera with UI directives, still keeping the “letter-like” feel:
+
+Module:
+    Target: x86_64
+    Version: 1.0
+    Subject: Interactive Demo
+
+Entry:
+    Func main():
+
+Block:
+    UI Button:
+        Label: "Click Me"
+        Action: Print "Button clicked!"
+
+    UI Form:
+        Field: Name
+        Field: Age
+        Submit:
+            Print "Form submitted with Name and Age"
+    
+    UI Output:
+        Show: "Welcome to Lettera UI"
+
+End:
+    Return 0
+
+    ---
+
+    
