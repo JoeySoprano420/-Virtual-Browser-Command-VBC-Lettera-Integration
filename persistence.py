@@ -144,5 +144,28 @@ CREATE TABLE vars_branches (
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+import uuid
+
+def fork_var(name):
+    val = get_var_db(name)
+    branch_id = str(uuid.uuid4())
+    conn = init_db()
+    c = conn.cursor()
+    c.execute("INSERT INTO vars_branches (name,branch_id,parent_id,value) VALUES (?,?,?,?)",
+              (name, branch_id, "root", json.dumps(val)))
+    conn.commit()
+    return branch_id
+
+def merge_var(name, strategy="max"):
+    conn = init_db()
+    c = conn.cursor()
+    c.execute("SELECT value FROM vars_branches WHERE name=?",(name,))
+    rows = [json.loads(r[0]) for r in c.fetchall()]
+    if not rows: return None
+    if strategy=="max": return max(rows)
+    if strategy=="min": return min(rows)
+    if strategy=="sum": return sum(rows)
+    return rows[0]
+
 
 
