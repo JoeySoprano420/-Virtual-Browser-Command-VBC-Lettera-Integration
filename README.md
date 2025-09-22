@@ -1552,3 +1552,34 @@ Distributed, collaborative, persistent apps all from .let.
 
 ---
 
+🔧 Phase 13: Time-Travel State + 3D Spatial Collaboration
+1. Time-Travel Persistence
+🔹 Concept
+
+Every persistent variable change is versioned in DB.
+
+Timeline of values = queryable & navigable.
+
+Users can Undo, Redo, or even branch alternate timelines.
+
+🔹 Syntax
+Persistent Equation: Counter = 0
+
+UI Button:
+    Label: "Increment"
+    Action:
+        Equation: Counter = Counter + 1
+        Save Counter
+
+UI Button:
+    Label: "Undo"
+    Action:
+        Undo Counter
+
+UI Button:
+    Label: "Redo"
+    Action:
+        Redo Counter
+
+---
+
