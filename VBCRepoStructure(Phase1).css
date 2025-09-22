@@ -1,0 +1,10 @@
+vbc/
+ ├── main.py              # Entry point for VBC
+ ├── shell/cli.py         # Command line interface
+ ├── lettera/lexer.py     # Lettera lexer
+ ├── lettera/parser.py    # Lettera parser + AST builder
+ ├── lettera/ast.py       # AST node definitions
+ ├── lettera/irgen.py     # LLVM IR generator
+ ├── lettera/styling.py   # Styling hooks for outputs
+ ├── lettera/compiler.py  # Compiler pipeline (lexer→parser→IR→binary)
+ └── examples/hello.let   # Example Lettera program
