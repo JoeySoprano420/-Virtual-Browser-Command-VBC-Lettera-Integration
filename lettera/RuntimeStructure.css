@@ -1,0 +1,10 @@
+/vbc
+ ├── /shell        # VBC shell
+ ├── /lettera      # Built-in Lettera toolchain (Python)
+ └── /letself      # Lettera self-host toolchain (in .let)
+      ├── lexer.let
+      ├── parser.let
+      ├── ast.let
+      ├── irgen.let
+      ├── optimizer.let
+      └── runtime.let
