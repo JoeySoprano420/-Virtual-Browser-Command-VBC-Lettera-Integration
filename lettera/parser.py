@@ -267,7 +267,64 @@ class VBCProcess:
     def send(self, msg):
         self.q.put(msg)
 
-    def update_ui(self):
-        # emit JS refresh in Web Mode
-        pass
+def update_ui(self):
+    # Emit JS refresh in Web Mode
+    if self.vars.get("WebMode"):
+        html = "".join(generate_ui(node) for node in self.vars.get("UI", []))
+        js = f"""
+        <script>
+        document.getElementById("vbc-ui").innerHTML = `{html}`;
+        </script>
+        """
+        self.vars["Output"].append(js)
+
+
+def parse_expression(self):
+    if self.peek()[0] == "NUMBER":
+        return ASTNode("Number", value=int(self.eat("NUMBER")[1]))
+    elif self.peek()[0] == "STRING":
+        return ASTNode("String", value=self.eat("STRING")[1].strip('"'))
+    elif self.peek()[0] == "IDENT" and self.peek()[1] == "[":
+        return self.parse_array()
+    elif self.peek()[0] == "IDENT" and self.peek()[1] == "{":
+        return self.parse_struct()
+    elif self.peek()[0] == "IDENT":
+        return ASTNode("Var", value=self.eat("IDENT")[1])
+    else:
+        raise RuntimeError("Unexpected expression")
+
+def parse_array(self):
+    self.eat("IDENT")  # '['
+    elements = []
+    while self.peek()[1] != "]":
+        elements.append(self.parse_expression())
+        if self.peek()[1] == ",":
+            self.eat("IDENT")
+    self.eat("IDENT")  # ']'
+    return ASTNode("Array", children=elements)
+
+def parse_struct(self):
+    self.eat("IDENT")  # '{'
+    fields = []
+    while self.peek()[1] != "}":
+        key = self.eat("IDENT")[1]
+        self.eat("IDENT")  # '='
+        val = self.parse_expression()
+        fields.append(ASTNode("Field", value=key, children=[val]))
+        if self.peek()[1] == ",":
+            self.eat("IDENT")
+    self.eat("IDENT")  # '}'
+    return ASTNode("Struct", children=fields)
+
+import json
+
+def serialize(node):
+    if node.type == "Number": return node.value
+    if node.type == "String": return node.value
+    if node.type == "Array": return [serialize(c) for c in node.children]
+    if node.type == "Struct": return {f.value: serialize(f.children[0]) for f in node.children}
+    return str(node.value)
+
+def deserialize(data):
+    return data  # JSON already structured
 
