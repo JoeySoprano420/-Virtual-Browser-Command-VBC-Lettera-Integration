@@ -316,15 +316,28 @@ def parse_struct(self):
     self.eat("IDENT")  # '}'
     return ASTNode("Struct", children=fields)
 
-import json
+def parse_channel(self):
+    self.eat("IDENT")  # Channel
+    name = self.eat("IDENT")[1]
+    return ASTNode("Channel", value=name)
 
-def serialize(node):
-    if node.type == "Number": return node.value
-    if node.type == "String": return node.value
-    if node.type == "Array": return [serialize(c) for c in node.children]
-    if node.type == "Struct": return {f.value: serialize(f.children[0]) for f in node.children}
-    return str(node.value)
+def parse_spawn(self):
+    self.eat("IDENT")  # Spawn
+    name = self.eat("IDENT")[1]
+    self.eat("IDENT")  # '('
+    self.eat("IDENT")  # ')'
+    block = self.parse_block()
+    return ASTNode("Spawn", value=name, children=[block])
 
-def deserialize(data):
-    return data  # JSON already structured
+def parse_send(self):
+    self.eat("IDENT")  # Send
+    ch = self.eat("IDENT")[1]
+    self.eat("IDENT")  # "with"
+    val = self.parse_expression()
+    return ASTNode("Send", value=ch, children=[val])
+
+def parse_receive(self):
+    self.eat("IDENT")  # Receive
+    ch = self.eat("IDENT")[1]
+    return ASTNode("Receive", value=ch)
 
