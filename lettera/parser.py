@@ -180,3 +180,12 @@ def generate_ui(node):
         msg = next((c.value.strip('"') for c in node.children if c.type == "UIShow"), "")
         return f'<div>{msg}</div>'
 
+elif self.peek()[0] == "IDENT" and self.peek()[1] == "Field:":
+    self.eat("IDENT")
+    val = self.eat("IDENT")[1]
+    children.append(ASTNode("UIField", value=val))
+elif self.peek()[0] == "IDENT" and self.peek()[1] == "Show:":
+    self.eat("IDENT")
+    val = self.eat("STRING")[1]
+    children.append(ASTNode("UIShow", value=val))
+
