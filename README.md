@@ -560,3 +560,27 @@ python -m lettera.seal verify examples/math.out
 
 ---
 
+5. Language Growth (Expanded Features Recap)
+
+✅ Variables (X = 5)
+
+✅ Arithmetic (Z = X + Y)
+
+✅ Printing values (Print "Z")
+
+✅ Styled IR rendering
+
+✅ Executable build (.exe/.out)
+
+✅ Optional SEE sealing
+
+Next expansion steps could be:
+
+Functions (user-defined with arguments + return values).
+
+Conditionals (If Above: Print "yes" Else: Print "no")
+
+Loops (Repeat 5 Times:).
+
+---
+
