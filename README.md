@@ -705,3 +705,13 @@ Submitting the form shows “Form submitted”.
 
 ---
 
+✅ With this, Lettera has:
+
+Functions + Conditionals (C-style).
+
+Interactive UIs in Web Mode (buttons, forms, reactive outputs).
+
+Styling Modes (letter, cmd, web, css).
+
+---
+
