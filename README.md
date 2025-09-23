@@ -2266,7 +2266,7 @@ Make sure you have the following installed and available in your `$PATH`:
 - **GCC or `ld`** (for linking)
 - python3 -m venv vbc-env
 	source vbc-env/bin/activate # or vbc-env\Scripts\activate on Windows
-	pip install -r requirements.txt
+	
 
 Then install Python dependencies:
 
